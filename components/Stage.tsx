@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import LineArt from "./LineArt";
 import WorkModal from "./WorkModal";
+import Logo from "./Logo";
 import { company, flagship, principles, works, type Work } from "@/lib/content";
 
 const STEPS = ["Бид", "Zulzaga EDU", "Ажлууд", "Яагаад бид", "Холбоо"];
@@ -97,8 +98,7 @@ export default function Stage() {
 
       <header className="topbar">
         <button className="logo" onClick={() => go(0)} aria-label="Нүүр">
-          {company.brand}
-          <span className="dot">.</span>
+          <Logo />
         </button>
         <nav className="menu">
           <button onClick={() => go(1)}>Zulzaga EDU</button>

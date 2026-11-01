@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { ICT_C, ICT_I, ICT_T } from "@/lib/logo";
 
 // Ард нь нарийн хэвтээ шугамуудаар зурагдсан том "ICT".
 // Үсгийн хэлбэр дотор шугамууд долгилж, хулгана ойртоход түлхэгдэнэ.
@@ -29,12 +30,16 @@ export default function LineArt({ step, total }: { step: number; total: number }
       off.width = w;
       off.height = h;
       const o = off.getContext("2d")!;
-      const size = Math.min(w * 0.42, h * 0.78);
+      // Логоны ICT хэлбэр (Logo.tsx-тэй ижил зам): өргөн 106, өндөр 40 нэгж
+      const scale = Math.min((w * 0.62) / 106, (h * 0.46) / 40);
+      o.translate(w / 2 - 53 * scale, h / 2 - 22 * scale);
+      o.scale(scale, scale);
       o.fillStyle = "#fff";
-      o.textAlign = "center";
-      o.textBaseline = "middle";
-      o.font = `700 ${size}px ${getComputedStyle(document.body).getPropertyValue("--font-serif") || "serif"}, serif`;
-      o.fillText("ICT", w / 2, h * 0.5);
+      o.strokeStyle = "#fff";
+      o.fill(new Path2D(ICT_I));
+      o.fill(new Path2D(ICT_T));
+      o.lineWidth = 12;
+      o.stroke(new Path2D(ICT_C));
       const data = o.getImageData(0, 0, w, h).data;
       mask = new Uint8Array(w * h);
       for (let i = 0; i < w * h; i++) mask[i] = data[i * 4 + 3] > 128 ? 1 : 0;
@@ -114,8 +119,6 @@ export default function LineArt({ step, total }: { step: number; total: number }
     };
 
     resize();
-    // Фонт ачаалагдсаны дараа хэлбэрийг дахин гаргана
-    document.fonts?.ready.then(buildMask);
     window.addEventListener("resize", resize);
     window.addEventListener("pointermove", onMove);
     document.addEventListener("pointerleave", onLeave);
