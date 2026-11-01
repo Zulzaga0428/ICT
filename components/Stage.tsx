@@ -4,11 +4,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import LineArt from "./LineArt";
 import WorkModal from "./WorkModal";
 import Logo from "./Logo";
-import { company, flagship, principles, works, type Work } from "@/lib/content";
+import { about, company, hero, works, type Work } from "@/lib/content";
 
-const STEPS = ["Бид", "Zulzaga EDU", "Ажлууд", "Яагаад бид", "Холбоо"];
-// Алхам бүр өөрийн хаягтай: icttool.mn/#ajluud гэх мэтээр шууд холбоос өгч болно
-const HASHES = ["bid", "edu", "ajluud", "zarchim", "holboo"];
+const STEPS = ["Нүүр", "Бидний тухай", "Ажлууд", "Холбоо"];
+// Алхам бүр өөрийн хаягтай: icttool.net/#ajluud гэх мэтээр шууд холбоос өгч болно
+const HASHES = ["nuur", "tuhai", "ajluud", "holboo"];
 
 export default function Stage() {
   const [step, setStep] = useState(0);
@@ -108,9 +108,9 @@ export default function Stage() {
           <Logo />
         </button>
         <nav className="menu">
-          <button onClick={() => go(1)}>Zulzaga EDU</button>
+          <button onClick={() => go(1)}>Бидний тухай</button>
           <button onClick={() => go(2)}>Ажлууд</button>
-          <button onClick={() => go(4)}>Холбоо</button>
+          <button onClick={() => go(3)}>Холбоо</button>
         </nav>
         <div className="tag">
           <span className="rule" />
@@ -149,38 +149,55 @@ export default function Stage() {
         </button>
       </div>
 
-      {/* 01 — Бид */}
+      {/* 01 — Нүүр */}
       <section className={`slide ${step === 0 ? "active" : ""}`} aria-hidden={step !== 0}>
-        <p className="eyebrow">Мэдээллийн технологийн компани</p>
-        <h1 className="headline">
-          Сургууль, бизнес, хүмүүст
+        <p className="eyebrow">{hero.eyebrow}</p>
+        <h1 className="headline quote">
+          {hero.line1}
           <br />
-          <em>бодитоор ажилладаг</em> технологи.
+          <em>{hero.accent}</em>
+          {hero.after}
         </h1>
         <button className="link" onClick={() => go(2)}>
           Бидний ажлууд
         </button>
       </section>
 
-      {/* 02 — Zulzaga EDU */}
+      {/* 02 — Бидний тухай */}
       <section className={`slide wide ${step === 1 ? "active" : ""}`} aria-hidden={step !== 1}>
-        <div className="eduGrid">
+        <div className="aboutGrid" data-scroll>
           <div>
-            <p className="eyebrow">{flagship.kind}</p>
-            <h2 className="headline">{flagship.title}</h2>
-            <p className="lead">{flagship.description}</p>
-            <ul className="features">
-              {flagship.features.map((f) => (
-                <li key={f}>{f}</li>
+            <p className="eyebrow">Бидний тухай</p>
+            <h2 className="headline">
+              {about.title[0]}
+              <br />
+              <em>{about.title[1]}</em>
+            </h2>
+          </div>
+          <div className="aboutBody">
+            {about.paragraphs.map((p) => (
+              <p key={p} className="lead">
+                {p}
+              </p>
+            ))}
+            <h3 className="aboutLabel">Бидний чиглэл</h3>
+            <ul className="chips">
+              {about.directions.map((d, i) => (
+                <li key={d} style={{ ["--i" as string]: i }}>
+                  {d}
+                </li>
               ))}
             </ul>
-            <button className="link" onClick={() => setOpen(flagship)}>
-              Системийг үзэх
-            </button>
+            <h3 className="aboutLabel">Бидний зарчим</h3>
+            <ul className="values">
+              {about.principles.map((p, i) => (
+                <li key={p} style={{ ["--i" as string]: i }}>
+                  <span>{pad(i)}</span>
+                  {p}
+                </li>
+              ))}
+            </ul>
           </div>
-          <button className="device" onClick={() => setOpen(flagship)} aria-label="Zulzaga EDU-г үзэх">
-            <Shot work={flagship} />
-          </button>
         </div>
       </section>
 
@@ -190,7 +207,12 @@ export default function Stage() {
         <h2 className="headline small">Амьд ажиллаж буй бүтээгдэхүүнүүд</h2>
         <div className="works" data-scroll>
           {works.map((w, i) => (
-            <button key={w.id} className="card" onClick={() => setOpen(w)} style={{ ["--i" as string]: i }}>
+            <button
+              key={w.id}
+              className={`card${w.featured ? " featured" : ""}`}
+              onClick={() => setOpen(w)}
+              style={{ ["--i" as string]: i }}
+            >
               <Shot work={w} />
               <span className="cardBody">
                 <span className="cardKind">{w.kind}</span>
@@ -203,23 +225,8 @@ export default function Stage() {
         </div>
       </section>
 
-      {/* 04 — Яагаад бид */}
+      {/* 04 — Холбоо */}
       <section className={`slide wide ${step === 3 ? "active" : ""}`} aria-hidden={step !== 3}>
-        <p className="eyebrow">Бидний зарчим</p>
-        <h2 className="headline small">Яагаад ICT Tool гэж?</h2>
-        <div className="principles" data-scroll>
-          {principles.map((p, i) => (
-            <div key={p.title} className="principle" style={{ ["--i" as string]: i }}>
-              <span className="pNum">{pad(i)}</span>
-              <h3>{p.title}</h3>
-              <p>{p.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 05 — Холбоо */}
-      <section className={`slide wide ${step === 4 ? "active" : ""}`} aria-hidden={step !== 4}>
         <p className="eyebrow">Холбоо барих</p>
         <h2 className="headline">Хамтдаа бүтээе.</h2>
         <dl className="facts">

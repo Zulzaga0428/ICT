@@ -307,50 +307,81 @@ a {
   letter-spacing: 0.14em;
 }
 
-/* ---------- EDU ---------- */
+/* ---------- Нүүр ---------- */
 
-.eduGrid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-  gap: 6vw;
-  align-items: center;
+.headline.quote {
+  font-size: clamp(28px, 2.95vw, 50px);
+  line-height: 1.22;
+  max-width: none;
 }
 
-.features {
-  list-style: none;
-  margin-top: 26px;
+/* ---------- Бидний тухай ---------- */
+
+.aboutGrid {
   display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr);
+  gap: 6vw;
+  align-items: start;
+}
+
+.aboutBody .lead {
+  margin-top: 0;
+  margin-bottom: 16px;
+  max-width: 60ch;
+}
+
+.aboutLabel {
+  margin: 30px 0 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
-.features li {
-  font-size: 14px;
-  color: var(--ink);
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.features li::before {
-  content: "";
-  width: 18px;
-  height: 1px;
-  background: var(--accent);
-}
-
-.device {
-  display: block;
-  border-radius: 14px;
-  padding: 10px;
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+.chips li {
+  font-size: 13px;
+  padding: 8px 14px;
   border: 1px solid var(--line);
-  box-shadow: 0 40px 120px -30px rgba(0, 0, 0, 0.7);
-  transform: perspective(1400px) rotateY(-8deg) rotateX(3deg);
-  transition: transform 0.8s var(--ease);
+  border-radius: 999px;
+  transition: border-color 0.3s, color 0.3s;
 }
 
-.device:hover {
-  transform: perspective(1400px) rotateY(-2deg) rotateX(1deg) translateY(-6px);
+.chips li:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.values {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 32px;
+  border-top: 1px solid var(--line);
+}
+
+.values li {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--serif);
+  font-size: 18px;
+}
+
+.values li span {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.08em;
 }
 
 .shot {
@@ -387,8 +418,16 @@ a {
 
 .works {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.card.featured {
+  border-color: rgba(243, 188, 163, 0.35);
+}
+
+.card.featured .cardKind {
+  color: var(--accent);
 }
 
 .card {
@@ -404,7 +443,8 @@ a {
 }
 
 .slide.active .card,
-.slide.active .principle {
+.slide.active .chips li,
+.slide.active .values li {
   animation: fadeUp 0.9s var(--ease) both;
   animation-delay: calc(0.25s + var(--i) * 0.08s);
 }
@@ -446,43 +486,6 @@ a {
   margin-top: 8px;
   font-size: 12px;
   color: var(--accent);
-}
-
-/* ---------- Зарчим ---------- */
-
-.principles {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0;
-  border-top: 1px solid var(--line);
-}
-
-.principle {
-  padding: 30px 28px 0 0;
-}
-
-.principle + .principle {
-  padding-left: 28px;
-  border-left: 1px solid var(--line);
-}
-
-.pNum {
-  font-size: 12px;
-  color: var(--accent);
-  letter-spacing: 0.08em;
-}
-
-.principle h3 {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: 22px;
-  margin: 16px 0 12px;
-}
-
-.principle p {
-  font-size: 14px;
-  line-height: 1.7;
-  color: #b6bccd;
 }
 
 /* ---------- Холбоо ---------- */
@@ -769,14 +772,20 @@ a {
 
 @media (max-width: 1100px) {
   .works {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 8px;
   }
-  .principles {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .card {
+    flex: 0 0 300px;
+    scroll-snap-align: start;
   }
-  .principle:nth-child(3) {
-    padding-left: 0;
-    border-left: 0;
+  .aboutGrid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-height: calc(100vh - 260px);
+    overflow-y: auto;
   }
 }
 
@@ -802,14 +811,6 @@ a {
   .headline.small {
     margin-bottom: 24px;
   }
-  .eduGrid {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-  .device {
-    transform: none;
-    order: -1;
-  }
   .lead {
     font-size: 14px;
   }
@@ -827,16 +828,15 @@ a {
     flex: 0 0 78%;
     scroll-snap-align: center;
   }
-  .principles {
+  .values {
     grid-template-columns: 1fr;
-    overflow-y: auto;
-    max-height: 56vh;
   }
-  .principle,
-  .principle + .principle {
-    padding: 20px 0;
-    border-left: 0;
-    border-bottom: 1px solid var(--line);
+  .values li {
+    font-size: 16px;
+    padding: 10px 0;
+  }
+  .aboutGrid {
+    max-height: calc(100vh - 230px);
   }
   .facts {
     margin-top: 28px;

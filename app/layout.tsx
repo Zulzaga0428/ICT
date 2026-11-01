@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "/",
     siteName: "ICT Tool",
-    title: "ICT Tool — Сургууль, бизнес, хүмүүст бодитоор ажилладаг технологи",
+    title: "ICT Tool — Программ хангамж · Вэб · Апп · AI",
     description,
     locale: "mn_MN",
   },
