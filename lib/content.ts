@@ -30,7 +30,7 @@ export const flagship: Work & { features: string[] } = {
     "Сургуулийн өдөр тутмын ажлыг нэг дор: ирц, дүн, журнал, хуваарь, эцэг эхтэй харилцах. Багш ажлаа алдахгүй, эцэг эх хүүхдийнхээ явцыг цаг алдалгүй харна.",
   url: "https://edu.zulzaga.app",
   embeddable: false,
-  image: "/works/edu.png",
+  image: "/works/edu.webp",
   features: [
     "Ирц ба цахим журнал",
     "Дүн, голч, жилийн эцсийн тайлан",
@@ -48,7 +48,7 @@ export const works: Work[] = [
     description: "Сургууль бүрт зориулсан нээлттэй сайт: мэдээ, танилцуулга, холбоо барих.",
     url: "https://demo.zulzaga.app",
     embeddable: true,
-    image: "/works/school.png",
+    image: "/works/school.webp",
   },
   {
     id: "kodu",
@@ -57,7 +57,7 @@ export const works: Work[] = [
     description: "Хиймэл оюуны тусламжтайгаар сайт, аппыг монгол хэлээр бүтээх платформ.",
     url: "https://kodu.live",
     embeddable: true,
-    image: "/works/kodu.png",
+    image: "/works/kodu.webp",
   },
   {
     id: "goesim",
@@ -66,7 +66,7 @@ export const works: Work[] = [
     description: "Дэлхийн 200 гаруй улсад ашиглах eSIM-ийг QPay-ээр шууд худалдан авах.",
     url: "https://goesim.world",
     embeddable: true,
-    image: "/works/goesim.png",
+    image: "/works/goesim.webp",
   },
   {
     id: "shatar",
@@ -75,7 +75,7 @@ export const works: Work[] = [
     description: "Бодит цагийн онлайн шатрын платформ.",
     url: "https://shatar.online",
     embeddable: true,
-    image: "/works/shatar.png",
+    image: "/works/shatar.webp",
   },
 ];
 
