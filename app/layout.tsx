@@ -13,10 +13,28 @@ const sans = Inter({
   variable: "--font-sans",
 });
 
+const description =
+  "Nart ICT Tool LLC: боловсрол, бизнес, хүмүүст зориулсан программ хангамж. Zulzaga EDU болон бусад бүтээгдэхүүн.";
+
+// Хуваалцах зураг нь app/opengraph-image.jpg, app/twitter-image.jpg (Next өөрөө холбоно)
 export const metadata: Metadata = {
+  metadataBase: new URL("https://icttool.net"),
   title: "ICT Tool — Nart ICT Tool LLC",
-  description:
-    "Nart ICT Tool LLC: боловсрол, бизнес, хүмүүст зориулсан программ хангамж. Zulzaga EDU болон бусад бүтээгдэхүүн.",
+  description,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: "ICT Tool",
+    title: "ICT Tool — Сургууль, бизнес, хүмүүст бодитоор ажилладаг технологи",
+    description,
+    locale: "mn_MN",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ICT Tool — Nart ICT Tool LLC",
+    description,
+  },
 };
 
 export const viewport: Viewport = {
