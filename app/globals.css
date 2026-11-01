@@ -163,12 +163,16 @@ a {
   font-weight: 600;
   color: var(--muted);
   letter-spacing: 0.06em;
-  transition: color 0.3s;
+  transition: color 0.5s var(--ease);
 }
 
-.nums button.on,
 .nums button:hover {
   color: var(--ink);
+}
+
+/* Идэвхтэй алхам: тоо, явцын зураас, нэр гурвуулаа тоорын өнгөтэй */
+.nums button.on {
+  color: var(--accent);
 }
 
 .bar {
@@ -182,7 +186,7 @@ a {
 .bar span {
   position: absolute;
   inset: 0 auto 0 0;
-  background: var(--ink);
+  background: var(--accent);
   transition: width 0.8s var(--ease);
 }
 
@@ -190,7 +194,8 @@ a {
   grid-column: 2;
   grid-row: 2;
   font-size: 13px;
-  color: var(--ink);
+  color: var(--accent);
+  letter-spacing: 0.02em;
   animation: fadeUp 0.6s var(--ease);
 }
 
