@@ -65,8 +65,16 @@ export default function LineArt({ step, total }: { step: number; total: number }
       return mask[yi * w + xi] === 1;
     }
 
+    // Нээгдэх үеийн хөдөлгөөн: мөр бүр зүүнээс баруун тийш үзгээр зурах мэт гарч,
+    // эхний долгио нь тайвширна. Нийт ~2.2с, зөвхөн анх ачаалахад.
+    const INTRO_MS = 2200;
+    let introStart = -1;
+
     function frame(t: number) {
       const time = reduceMotion ? 0 : t * 0.0006;
+      const now = performance.now();
+      if (introStart < 0) introStart = now;
+      const intro = reduceMotion ? 1 : Math.min(1, (now - introStart) / INTRO_MS);
       mouse.x += (mouse.tx - mouse.x) * 0.08;
       mouse.y += (mouse.ty - mouse.y) * 0.08;
       const target = (stepRef.current - (total - 1) / 2) * -w * 0.06;
@@ -77,9 +85,17 @@ export default function LineArt({ step, total }: { step: number; total: number }
       const step = 4;
 
       for (let y = gap / 2; y < h; y += gap) {
+        const k = y / h;
+        // Дээрээс доош 0.45-ын саатлаар дараалж зурагдана
+        const rp = Math.min(1, Math.max(0, (intro - k * 0.45) / 0.55));
+        if (rp <= 0) continue;
+        const eased = 1 - (1 - rp) ** 3;
+        const reach = eased * w;
+        const settle = 1 + (1 - eased) * 2.2;
+        ctx.strokeStyle = `rgba(${(170 + k * 60) | 0}, ${(180 + k * 20) | 0}, 230, ${0.16 * eased})`;
         let drawing = false;
         ctx.beginPath();
-        for (let x = 0; x <= w; x += step) {
+        for (let x = 0; x <= reach; x += step) {
           const sx = x - offset;
           if (!inside(sx, y)) {
             if (drawing) {
@@ -96,14 +112,12 @@ export default function LineArt({ step, total }: { step: number; total: number }
           const wave =
             Math.sin(x * 0.012 + time * 2 + y * 0.03) * 3.2 +
             Math.sin(x * 0.031 - time * 1.3) * 1.4;
-          const yy = y + wave + push;
+          const yy = y + wave * settle + push;
           if (!drawing) {
             ctx.moveTo(x, yy);
             drawing = true;
           } else ctx.lineTo(x, yy);
         }
-        const k = y / h;
-        ctx.strokeStyle = `rgba(${170 + k * 60 | 0}, ${180 + k * 20 | 0}, 230, 0.16)`;
         if (drawing) ctx.stroke();
       }
       if (!reduceMotion) raf = requestAnimationFrame(frame);

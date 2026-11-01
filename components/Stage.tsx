@@ -13,6 +13,13 @@ const HASHES = ["bid", "edu", "ajluud", "zarchim", "holboo"];
 export default function Stage() {
   const [step, setStep] = useState(0);
   const [open, setOpen] = useState<Work | null>(null);
+  // Анх ачаалахад шугамууд зурагдсаны дараа бичвэр гарна (globals.css .stage.intro)
+  const [intro, setIntro] = useState(true);
+
+  useEffect(() => {
+    const t = setTimeout(() => setIntro(false), 2800);
+    return () => clearTimeout(t);
+  }, []);
   const lock = useRef(0);
   const touchY = useRef<number | null>(null);
 
@@ -92,7 +99,7 @@ export default function Stage() {
   const pad = (n: number) => String(n + 1).padStart(2, "0");
 
   return (
-    <main className="stage" data-step={step}>
+    <main className={`stage${intro ? " intro" : ""}`} data-step={step}>
       <div className="glow" style={{ ["--p" as string]: step / (STEPS.length - 1) }} />
       <LineArt step={step} total={STEPS.length} />
 
