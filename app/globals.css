@@ -689,6 +689,95 @@ a {
   line-height: 1.5;
 }
 
+/* ---------- Гарчиг тайлагдах ---------- */
+
+/* Алхам идэвхжихэд гарчиг доороосоо хөшиг сөхөх мэт гарна */
+.slide.active .headline {
+  animation: unveil 1.1s var(--ease) 0.25s both;
+}
+
+.stage.intro .slide.active .headline {
+  animation-delay: 1.3s;
+}
+
+@keyframes unveil {
+  from {
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(0.35em);
+  }
+  to {
+    clip-path: inset(-0.2em -0.2em -0.35em -0.2em);
+    transform: none;
+  }
+}
+
+/* ---------- «Гүйлгэх» заавар ---------- */
+
+.hint {
+  position: absolute;
+  left: 50%;
+  bottom: 40px;
+  z-index: 5;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease, visibility 0s linear 0.6s;
+}
+
+.hint.show {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1.2s ease 3s, visibility 0s;
+}
+
+.hint:hover {
+  color: var(--ink);
+}
+
+.hintTrack {
+  position: relative;
+  width: 1px;
+  height: 44px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.hintDot {
+  position: absolute;
+  left: -1px;
+  top: -12px;
+  width: 3px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--accent);
+  animation: hintRun 2.2s var(--ease) infinite;
+}
+
+@keyframes hintRun {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(56px);
+    opacity: 0;
+  }
+}
+
 /* ---------- Нээгдэх үе ---------- */
 
 .stage.intro .slide.active {
@@ -784,6 +873,9 @@ a {
   .tag {
     display: none;
   }
+  .hint {
+    bottom: 104px;
+  }
   .slide,
   .slide.wide {
     padding: 96px 24px 120px;
@@ -830,7 +922,8 @@ a {
   .rail {
     left: 24px;
     bottom: 32px;
-    grid-template-columns: 160px auto;
+    grid-template-columns: 120px auto;
+    column-gap: 16px;
   }
   .arrows {
     right: 24px;

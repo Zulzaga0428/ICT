@@ -70,11 +70,30 @@ export default function LineArt({ step, total }: { step: number; total: number }
     const INTRO_MS = 2200;
     let introStart = -1;
 
+    // Алхам солиход шугамуудаар нэг зурвас долгио гүйнэ: урагшлахад дээрээс доош,
+    // буцахад доороос дээш. ~1.4с, аажмаар сулрана.
+    const SWEEP_MS = 1400;
+    let lastStep = stepRef.current;
+    let sweepStart = -1e9;
+    let sweepDir = 1;
+
     function frame(t: number) {
       const time = reduceMotion ? 0 : t * 0.0006;
       const now = performance.now();
       if (introStart < 0) introStart = now;
       const intro = reduceMotion ? 1 : Math.min(1, (now - introStart) / INTRO_MS);
+      if (stepRef.current !== lastStep) {
+        sweepDir = stepRef.current > lastStep ? 1 : -1;
+        lastStep = stepRef.current;
+        sweepStart = now;
+      }
+      const sp = (now - sweepStart) / SWEEP_MS;
+      const sweeping = !reduceMotion && sp >= 0 && sp < 1;
+      // Зурвасын төв: -0.2h-аас 1.2h хүртэл (буцахад эсрэгээр), хурд нь зөөлөн удаашрана
+      const se = 1 - (1 - Math.min(sp, 1)) ** 2;
+      const front = sweepDir > 0 ? h * (-0.2 + 1.4 * se) : h * (1.2 - 1.4 * se);
+      const sweepAmp = 16 * (1 - sp);
+      const band = h * 0.11;
       mouse.x += (mouse.tx - mouse.x) * 0.08;
       mouse.y += (mouse.ty - mouse.y) * 0.08;
       const target = (stepRef.current - (total - 1) / 2) * -w * 0.06;
@@ -92,7 +111,8 @@ export default function LineArt({ step, total }: { step: number; total: number }
         const eased = 1 - (1 - rp) ** 3;
         const reach = eased * w;
         const settle = 1 + (1 - eased) * 2.2;
-        ctx.strokeStyle = `rgba(${(170 + k * 60) | 0}, ${(180 + k * 20) | 0}, 230, ${0.16 * eased})`;
+        const bump = sweeping ? Math.exp(-(((y - front) / band) ** 2)) : 0;
+        ctx.strokeStyle = `rgba(${(170 + k * 60) | 0}, ${(180 + k * 20) | 0}, 230, ${0.16 * eased * (1 + bump * 0.9)})`;
         let drawing = false;
         ctx.beginPath();
         for (let x = 0; x <= reach; x += step) {
@@ -112,7 +132,8 @@ export default function LineArt({ step, total }: { step: number; total: number }
           const wave =
             Math.sin(x * 0.012 + time * 2 + y * 0.03) * 3.2 +
             Math.sin(x * 0.031 - time * 1.3) * 1.4;
-          const yy = y + wave * settle + push;
+          const swell = bump ? bump * sweepAmp * Math.sin(x * 0.016 - now * 0.005) : 0;
+          const yy = y + wave * settle + push + swell;
           if (!drawing) {
             ctx.moveTo(x, yy);
             drawing = true;

@@ -15,6 +15,11 @@ export default function Stage() {
   const [open, setOpen] = useState<Work | null>(null);
   // Анх ачаалахад шугамууд зурагдсаны дараа бичвэр гарна (globals.css .stage.intro)
   const [intro, setIntro] = useState(true);
+  // «Гүйлгэх» заавар: нэг удаа нүүрнээс шилжмэгц бүрмөсөн нуугдана
+  const [moved, setMoved] = useState(false);
+  useEffect(() => {
+    if (step !== 0) setMoved(true);
+  }, [step]);
 
   useEffect(() => {
     const t = setTimeout(() => setIntro(false), 2800);
@@ -87,9 +92,15 @@ export default function Stage() {
     };
   }, [open, nudge, go]);
 
+  // Анх нээхэд болон хуудас нээлттэй үед #хаяг солигдоход (холбоос дарах г.м.) алхам руу шилжинэ
   useEffect(() => {
-    const i = HASHES.indexOf(window.location.hash.slice(1));
-    if (i > 0) setStep(i);
+    const fromHash = () => {
+      const i = HASHES.indexOf(window.location.hash.slice(1));
+      if (i >= 0) setStep(i);
+    };
+    fromHash();
+    window.addEventListener("hashchange", fromHash);
+    return () => window.removeEventListener("hashchange", fromHash);
   }, []);
 
   useEffect(() => {
@@ -134,6 +145,18 @@ export default function Stage() {
           {STEPS[step]}
         </div>
       </div>
+
+      <button
+        className={`hint${step === 0 && !moved ? " show" : ""}`}
+        onClick={() => go(1)}
+        aria-label="Дараагийн хэсэг"
+        tabIndex={step === 0 && !moved ? 0 : -1}
+      >
+        <span className="hintTrack">
+          <span className="hintDot" />
+        </span>
+        Гүйлгэх
+      </button>
 
       <div className="arrows">
         <button onClick={() => go(step - 1)} disabled={step === 0} aria-label="Өмнөх">
