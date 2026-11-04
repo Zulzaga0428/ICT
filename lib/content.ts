@@ -4,11 +4,11 @@ export const company = {
   brand: "ICT Tool",
   legalName: "Nart ICT Tool LLC",
   legalNameMn: "Нарт Ай Си Ти Түүл ХХК",
-  // TODO: бодит мэдээллээр солих
-  registry: "—",
+  // Регистр ирэхээр бөглөнө; хоосон үед сайтад харагдахгүй
+  registry: "",
   address: "Улаанбаатар хот",
-  email: "—",
-  phone: "—",
+  email: "hello@icttool.net",
+  phone: "7201 5706",
 };
 
 export type Work = {

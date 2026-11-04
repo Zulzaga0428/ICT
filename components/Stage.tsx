@@ -237,21 +237,27 @@ export default function Stage() {
               <small>{company.legalNameMn}</small>
             </dd>
           </div>
-          <div>
-            <dt>Регистрийн дугаар</dt>
-            <dd>{company.registry}</dd>
-          </div>
+          {company.registry && (
+            <div>
+              <dt>Регистрийн дугаар</dt>
+              <dd>{company.registry}</dd>
+            </div>
+          )}
           <div>
             <dt>Хаяг</dt>
             <dd>{company.address}</dd>
           </div>
           <div>
             <dt>Имэйл</dt>
-            <dd>{company.email.includes("@") ? <a href={`mailto:${company.email}`}>{company.email}</a> : company.email}</dd>
+            <dd>
+              <a href={`mailto:${company.email}`}>{company.email}</a>
+            </dd>
           </div>
           <div>
             <dt>Утас</dt>
-            <dd>{company.phone}</dd>
+            <dd>
+              <a href={`tel:+976${company.phone.replace(/\D/g, "")}`}>{company.phone}</a>
+            </dd>
           </div>
         </dl>
         <p className="copy">© {new Date().getFullYear()} {company.legalName}</p>

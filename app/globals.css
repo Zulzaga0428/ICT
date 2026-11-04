@@ -507,7 +507,19 @@ a {
 
 .facts dd {
   font-family: var(--serif);
+  font-variant-numeric: lining-nums;
   font-size: 19px;
+}
+
+.facts dd a {
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.facts dd a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 .facts dd small {
