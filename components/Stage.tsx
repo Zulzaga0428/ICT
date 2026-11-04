@@ -107,11 +107,6 @@ export default function Stage() {
         <button className="logo" onClick={() => go(0)} aria-label="Нүүр">
           <Logo />
         </button>
-        <nav className="menu">
-          <button onClick={() => go(1)}>Бидний тухай</button>
-          <button onClick={() => go(2)}>Ажлууд</button>
-          <button onClick={() => go(3)}>Холбоо</button>
-        </nav>
         <div className="tag">
           <span className="rule" />
           {company.legalName}

@@ -95,33 +95,6 @@ a {
   width: auto;
 }
 
-.menu {
-  display: flex;
-  gap: 64px;
-  font-family: var(--serif);
-  font-size: 16px;
-}
-
-.menu button {
-  position: relative;
-  padding: 4px 0;
-}
-
-.menu button::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 100%;
-  bottom: 0;
-  height: 1px;
-  background: var(--accent);
-  transition: right 0.4s var(--ease);
-}
-
-.menu button:hover::after {
-  right: 0;
-}
-
 .tag {
   display: flex;
   align-items: center;
@@ -808,7 +781,6 @@ a {
   .logo svg {
     height: 24px;
   }
-  .menu,
   .tag {
     display: none;
   }
