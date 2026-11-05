@@ -245,40 +245,56 @@ export default function Stage() {
 
       {/* 04 — Холбоо */}
       <section className={`slide wide ${step === 3 ? "active" : ""}`} aria-hidden={step !== 3}>
-        <p className="eyebrow">Холбоо барих</p>
+        <p className="eyebrow">
+          Холбоо барих · <span lang="en">Contact</span>
+        </p>
         <h2 className="headline">Хамтдаа бүтээе.</h2>
         <dl className="facts">
           <div>
-            <dt>Байгууллага</dt>
+            <dt>
+              Байгууллага · <span lang="en">Company</span>
+            </dt>
             <dd>
               {company.legalName}
               <small>{company.legalNameMn}</small>
             </dd>
           </div>
-          {company.registry && (
-            <div>
-              <dt>Регистрийн дугаар</dt>
-              <dd>{company.registry}</dd>
-            </div>
-          )}
           <div>
-            <dt>Хаяг</dt>
-            <dd>{company.address}</dd>
+            <dt>
+              Улсын бүртгэлийн дугаар · <span lang="en">Reg. No.</span>
+            </dt>
+            <dd>{company.registry}</dd>
+          </div>
+          <div className="wide">
+            <dt>
+              Хаяг · <span lang="en">Address</span>
+            </dt>
+            <dd>
+              {company.addressMn}
+              <small lang="en">{company.addressEn}</small>
+            </dd>
           </div>
           <div>
-            <dt>Имэйл</dt>
+            <dt>
+              Имэйл · <span lang="en">Email</span>
+            </dt>
             <dd>
               <a href={`mailto:${company.email}`}>{company.email}</a>
             </dd>
           </div>
           <div>
-            <dt>Утас</dt>
+            <dt>
+              Утас · <span lang="en">Phone</span>
+            </dt>
             <dd>
-              <a href={`tel:+976${company.phone.replace(/\D/g, "")}`}>{company.phone}</a>
+              <a href={`tel:+${company.phone.replace(/\D/g, "")}`}>{company.phone}</a>
             </dd>
           </div>
         </dl>
-        <p className="copy">© {new Date().getFullYear()} {company.legalName}</p>
+        <p className="copy">
+          © {new Date().getFullYear()} {company.legalName} · Reg. No. {company.registry} ·{" "}
+          <a href="/privacy">Нууцлалын бодлого / Privacy Policy</a>
+        </p>
       </section>
 
       {open && <WorkModal work={open} onClose={() => setOpen(null)} />}

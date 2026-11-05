@@ -4,11 +4,13 @@ export const company = {
   brand: "ICT Tool",
   legalName: "Nart ICT Tool LLC",
   legalNameMn: "Нарт Ай Си Ти Түүл ХХК",
-  // Регистр ирэхээр бөглөнө; хоосон үед сайтад харагдахгүй
-  registry: "",
-  address: "Улаанбаатар хот",
+  // Улсын бүртгэлийн гэрчилгээ, D&B-д бүртгэсэнтэй ҮСЭГ НЭГ БҮРЧЛЭН адил байх ёстой —
+  // D&B сайт дээрх мэдээллийг тулгаж шалгадаг.
+  registry: "7343649",
+  addressMn: "Улаанбаатар хот, Баянгол дүүрэг, 12-р хороо, 6 бичил хороолол, 6а байр, 89 тоот",
+  addressEn: "Bayangol district, 12-r khoroo, 6 bichil khoroolol, Building 6a, Door 89, Ulaanbaatar, Mongolia",
   email: "hello@icttool.net",
-  phone: "7201 5706",
+  phone: "+976 7270 5789",
 };
 
 export type Work = {
